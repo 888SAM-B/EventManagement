@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const Register = () => {
+  const navigate = useNavigate();
   const url=import.meta.env.VITE_URL
   const [firstName,setFirstName] = useState('')
   const [lastName,setLastName] = useState('')
@@ -25,6 +26,7 @@ const Register = () => {
     const data = await response.json();
     if (data.success) {
       alert('Registration successful!');
+      navigate('/login'); // Redirect to login page after successful registration
     } else {
       alert('Registration failed: ' + data.message);
     }

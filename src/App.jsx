@@ -5,6 +5,9 @@ import Home from './page/home'
 import Login from './page/login'
 import Register from './page/register'
 import Dashboard from './page/dashboard'
+import AddContent from './page/addContent'
+import FileUpload from './page/FileUpload'
+import Event from './page/event'
 function App() {
   return (
     <>
@@ -14,6 +17,10 @@ function App() {
         <Route path='/login' element={<Login/>} ></Route>
         <Route path='/register' element={<Register/>} ></Route>
         <Route path='/dashboard' element={<Dashboard/>} ></Route>
+        <Route path='/add-content' element={<AddContent/>} ></Route>
+        <Route path='/file-upload' element={<FileUpload/>} ></Route>
+        <Route path='/event' element={<Event/>} ></Route>
+        <Route path='*' element={<h1>404 Not Found</h1>} ></Route>
       </Routes>
      </div>
     </>

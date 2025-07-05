@@ -22,18 +22,24 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
-const User = mongoose.model('user', userSchema);
+const orgSchema = new mongoose.Schema({
+  orgName:String,
+  number:Number,
+  userName:String,
+  password:String,
+})
 
+const User = mongoose.model('user', userSchema);
+const Organization =mongoose.model('organization',orgSchema)
 
 const OtherContactSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    
   },
   number: {
     type: String,
-    required: true,
-    match: /^[0-9]{10}$/ // Optional validation for 10-digit number
+    
   }
 });
 
@@ -48,6 +54,10 @@ const EventSchema = new mongoose.Schema({
   },
   timing: {
     type: Date,
+    required: true
+  },
+  organizationName: {
+    type: String,
     required: true
   },
   organizerName: {
@@ -128,6 +138,34 @@ app.post('/register', async (req, res) => {
   }
 });
 
+app.post('/insregister', async (req, res) => {
+  const { insName, number,userName, password } = req.body;
+  
+  if ( !insName || !number|| !userName || !password) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
+  try {
+    const exist = await Organization.findOne({ userName });
+    if (exist) {
+      return res.status(400).json({ success: false, message: 'User Already Exist' });
+    }
+
+    const newOrganization = new Organization({ orgName:insName,number,userName, password });
+    await newOrganization.save();
+    
+    return res.status(201).json({
+      success: true,
+      message: 'Organization registered successfully',
+    });
+  } catch (error) {
+    console.log("error in register", error);
+    return res.status(500).json({ success: false, message: "Error Registering User" });
+  }
+});
+
+
+
 
 app.post('/login',async(req,res)=>{
   const { userName, password } = req.body;
@@ -144,18 +182,61 @@ app.post('/login',async(req,res)=>{
 
 })
 
+app.get('/fetchOrg',async(req,res)=>{
+  try {
+    const orgs = await Organization.find({});
+    console.log(orgs)
+    res.status(200).json({ success: true, orgNames: orgs.map(org => org.orgName) });
+
+  } catch (error) {
+    console.error("Error fetching organizations:", error);
+    res.status(500).json({ success: false, message: "Error fetching organizations" });
+  }
+})
+
+app.post('/inslogin',async(req,res)=>{
+  const {institution,userName,password}=req.body;
+  console.log(institution,userName,password)
+   if(!institution || !userName || !password){
+    return res.status(400).json({success:false,message:"All fields are required"});
+  }
+  const user =await Organization.findOne({orgName:institution,userName,password});
+  if(!user){
+    return res.status(400).json({success:false,message:"Invalid Credentials"});
+  }
+  console.log("Ins Login",user);
+  
+  return res.status(200).json({success:true,message:"Login Successful",user});
+})
+
+
 app.get('/fetchUser', async (req, res) => {
   const userId = req.query.user;
   console.log("UserId:", userId);
-
   try {
     const user = await User.findOne({ userName: userId });
-
     if (!user) {
       console.log("User Not Found");
       return res.status(400).json({ success: false, message: "Cannot find User" }); // ✅ added return
     }
+    console.log("User Found:", user);
+    return res.status(200).json({ success: true, user }); // ✅ 200 OK instead of 201 Created
+  } catch (error) {
+    console.error("Error in /fetchUser:", error);
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
 
+
+app.get('/fetchOrgUser', async (req, res) => {
+  const userId = req.query.user;
+  console.log("UserId:", userId);
+  try {
+    const user = await Organization.findOne({ userName: userId });
+    if (!user) {
+      console.log("User Not Found");
+      return res.status(400).json({ success: false, message: "Cannot find User" }); // ✅ added return
+    }
     console.log("User Found:", user);
     return res.status(200).json({ success: true, user }); // ✅ 200 OK instead of 201 Created
   } catch (error) {
@@ -189,10 +270,15 @@ app.post('/addEvent', async (req, res) => {
   }
 
   try {
+    const org=await Organization.findOne({userName:createdBy})
+    const orgName = org.orgName;
+    console.log(org,orgName)
+
     const newEvent = new mongoose.model('Event', EventSchema)({
       eventName,
       venue,
       timing: new Date(timing),
+      organizationName:orgName,
       organizerName,
       organizerNumber,
       organizerMail,
@@ -222,6 +308,11 @@ app.get('/getData', async (req, res) => {
     const events = await mongoose.model('Event', EventSchema).find({});
     if (events.length === 0) {
       return res.status(404).json({ success: false, message: 'No events found' });
+    }
+    const userName = req.headers['username'];
+    console.log("Request from user:", userName);
+    if (!userName) {
+      return res.status(400).json({ success: false, message: 'Username  is required' });
     }
     return res.status(200).json({ success: true, data: events });
   } catch (error) {

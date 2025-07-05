@@ -1,0 +1,20 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-color: #000000;
+    color: aliceblue;
+    font-family: 'poppins', sans-serif;
+}
+.animate01{
+    font-size: 50px;
+    font-weight: 550;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.animate-container{ 
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}

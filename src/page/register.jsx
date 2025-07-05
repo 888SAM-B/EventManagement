@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import VantaBackground from './vantabackground';
 const Register = () => {
   const navigate = useNavigate();
   const url=import.meta.env.VITE_URL
@@ -34,6 +35,7 @@ const Register = () => {
 
   return (
     <>
+     
       <h1>Register</h1>
       <form action="/" onSubmit={handleSubmit} >
       <label htmlFor="fistName">First Name</label>

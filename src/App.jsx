@@ -8,6 +8,9 @@ import Dashboard from './page/dashboard'
 import AddContent from './page/addContent'
 import FileUpload from './page/FileUpload'
 import Event from './page/event'
+import OrganizationLogin from './page/organizationLogin'
+import InsRegister from './page/insregister'
+import InsDashboard from './page/insdashboard'
 function App() {
   return (
     <>
@@ -20,7 +23,11 @@ function App() {
         <Route path='/add-content' element={<AddContent/>} ></Route>
         <Route path='/file-upload' element={<FileUpload/>} ></Route>
         <Route path='/event' element={<Event/>} ></Route>
+        <Route path='/orglogin' element={<OrganizationLogin/>}></Route>
+        <Route path='/orgregister' element={<InsRegister/>}></Route>
+        <Route path='/orgdashboard' element={<InsDashboard/>}></Route>
         <Route path='*' element={<h1>404 Not Found</h1>} ></Route>
+
       </Routes>
      </div>
     </>

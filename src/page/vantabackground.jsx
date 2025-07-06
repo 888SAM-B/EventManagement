@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-// @ts-ignore: Ignore type warning if you're using JS
 import NET from 'vanta/dist/vanta.net.min';
 
 const VantaBackground = () => {
@@ -15,19 +14,27 @@ const VantaBackground = () => {
           THREE: THREE,
           mouseControls: true,
           touchControls: true,
-          gyroControls: true,
+          gyroControls: false,
           minHeight: 200.0,
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          color: 0xff3f3f, // 🔴 red lines
-          backgroundColor: 0x000000, // ⚫ black background
+          color: 0xff3f3f,
+          backgroundColor: 0x000000,
+
+          // 🎯 These settings reduce overcrowded lines:
+          points: 18,         // Fewer points overall
+          maxDistance: 30,   // Limit line length
+          spacing: 30,       // More space between points
         })
       );
     }
 
     return () => {
-      if (vantaEffect) vantaEffect.destroy();
+      if (vantaEffect) {
+        vantaEffect.destroy();
+        setVantaEffect(null);
+      }
     };
   }, [vantaEffect]);
 
@@ -41,6 +48,7 @@ const VantaBackground = () => {
         top: 0,
         left: 0,
         zIndex: -1,
+        backgroundColor: '#000000',
       }}
     ></div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './insdashboard.css'
+import ShinyText from './ShinyText';
 const InsDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -91,28 +92,34 @@ const InsDashboard = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }} > 
-      <h1 style={{textAlign:"center"}} >{user.orgName}</h1>
-
-     
-
-      <button onClick={() =>navigate('/add-content',{state:{user:user}})}>
-        ➕ Add Event
+    <div style={{ padding: "20px" }} className='body-dashboard' >
+      <h1 style={{ textAlign: "center" }} >{user.orgName}</h1>
+      <button onClick={() => navigate('/add-content', { state: { user: user } })} className='add-button' >
+        + Add Event
       </button>
+      <br />
+      <div className="sort-buttons">
+        <div className='sort-item'>
+          <div className="text">Search:</div>
+          <input
+            type="text"
+            placeholder="Search by event name"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
 
-      <div style={{ marginBottom: "20px" }}>
-        <label>
-          Sort by:&nbsp;
+
+        <div className='sort-item'>
+          <div className="text"> Sort by: </div>
           <select value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
             <option value="asc">Oldest First</option>
             <option value="desc">Newest First</option>
           </select>
-        </label>
+        </div>
 
-        &nbsp;&nbsp;
-
-        <label>
-          Filter by Category:&nbsp;
+        <div className='sort-item'>
+          <div className="text"> Filter by Category: </div>
           <select onChange={handleCategoryFilter} defaultValue="">
             <option value="">All</option>
             {Array.from(new Set(data.data.map(ev => ev.category))).map(cat => (
@@ -121,22 +128,10 @@ const InsDashboard = () => {
               </option>
             ))}
           </select>
-        </label>
-
-        &nbsp;&nbsp;
-
-        <label>
-          Search:&nbsp;
-          <input
-            type="text"
-            placeholder="Search by event name"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </label>
+        </div>
       </div>
 
-      <h1>YOUR EVENTS</h1>
+      <ShinyText text="YOUR EVENTS" disabled={false} speed={3} className='headers event-header' data-aos="fade" />
       <div className="container">
         {ourEvents.length === 0 ? (
           <p>No events created by you.</p>
@@ -168,7 +163,7 @@ const InsDashboard = () => {
         )}
       </div>
       <br />
-        <hr />
+      
 
       <h1>Other Events</h1>
       <ul style={{ listStyle: "none", padding: 0 }} className='container'>

@@ -1,0 +1,155 @@
+.add-content-container {
+  background-color: #121212;
+  color: #eaeaea;
+  min-height: 100vh;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+  
+}
+
+.add-content-title {
+  color: #e39b30;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.add-content-form {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1a1a1a;
+  padding: 30px;
+  border: 0.1px solid rgba(240, 248, 255, 0.116);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(235, 226, 212, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #e39b30;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: #1f1f1f;
+  border: 1px solid #444;
+  color: #eaeaea;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 5px #c5b59eaa;
+}
+
+.other-contact-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.other-contact-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-contact-btn,
+.remove-contact-btn {
+  background-color: #e39b30;
+  border: none;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-contact-btn:hover,
+.remove-contact-btn:hover {
+  background-color: #ffae34;
+}
+
+.pdf-error {
+  color: #ff5555;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.uploading-text {
+  color: #e39b30;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.pdf-preview-container {
+  margin-top: 20px;
+}
+
+.pdf-preview-title {
+  margin-bottom: 10px;
+  color: #e39b30;
+}
+
+.pdf-preview-iframe {
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #e39b30;
+  color: #000;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #ffae34;
+}
+
+.success-message {
+  margin-top: 15px;
+  color: #76ff76;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  .add-content-form {
+    padding: 20px;
+  }
+
+  .add-content-title {
+    font-size: 1.6rem;
+  }
+
+  .other-contact-row {
+    flex-direction: column;
+  }
+
+  .submit-btn {
+    font-size: 0.95rem;
+  }
+}

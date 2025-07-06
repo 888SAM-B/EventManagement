@@ -182,11 +182,14 @@ const AddContent = () => {
           <label className="form-label">Category:</label>
           <select className="form-select" name="category" required value={formData.category} onChange={handleChange}>
             <option value="">-- Select Event Category --</option>
-            <option value="technical">Technical Events</option>
+            <option value="arts">Arts & Literature</option>
             <option value="cultural">Cultural Programs</option>
+            <option value="technical">Technical Events</option>
             <option value="mathematical">Mathematics-Based Events</option>
             <option value="science">Science & Innovation</option>
-            <option value="arts">Arts & Literature</option>
+            <option value="sports">Sports</option>
+            <option value="seminar">Seminar</option>
+            <option value="conference">Conference</option>
             <option value="mixed">Interdisciplinary / Mixed Events</option>
           </select>
         </div>

@@ -1,0 +1,194 @@
+/* register.css */
+
+.body1 {
+  margin: 0;
+  padding: 0;
+  /* background-color: #000000; */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  /* overflow: hidden; */
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
+  width: 100%;
+  /* align-items: center; */
+  /* justify-content: center; */
+  height: 100vh;
+}
+
+.body10 {
+  height: 100vh;
+  padding: 10px ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background-color: rgba(0, 0, 0, 0.9); /* Just in case Vanta is transparent */
+}
+.register-container{
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid aliceblue !important;
+  border-radius: 21px;
+  padding: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
+  align-items: center;
+  box-shadow: 0px 0px 24px rgba(255, 255, 255, 0.2) !important;
+  margin-top: 20px;
+  
+}
+.register-form{
+  
+  font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    align-items:center;
+    justify-content: center;
+}
+.all-inputs{
+  margin: 0px;
+  width: 95%;
+}
+.topic{
+  color: #e39b30;
+  text-align: center;
+}
+input{
+    /* border: 5px solid yellow !important; */
+    padding: 10px !important;
+    width: 95% !important;
+    border-radius: 7px !important;
+    background-color: transparent !important;
+    outline: none !important;
+    border: 1px solid aliceblue;
+    color: aliceblue;
+    
+}
+select {
+    padding: 10px !important;
+    width: 100% !important;
+    border-radius: 7px !important;
+    background-color: transparent !important;
+    outline: none !important;
+    border: 1px solid aliceblue;
+    color: aliceblue;
+    font-family: inherit;
+    
+}
+
+/* Optional: Style the dropdown arrow */
+select option {
+    background-color: #222; /* or any dark tone */
+    color: aliceblue;
+    
+}
+
+.inputs{
+  margin-bottom: 10px ;
+  
+  
+}
+.inputs *{
+  margin: 10px 0px;
+}
+.submit-btn{
+  border: none;
+  margin: auto;
+  margin-top: 30px;
+  
+  background-color: #e39b30 !important;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.glass-card {
+  
+  background: rgba(255, 255, 255, 0.096);
+  backdrop-filter: blur(0.1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0px 0px rgba(255, 255, 255, 0);
+  position: relative;
+  
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width: 1px; */
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+.submit-btn:hover {
+    background-color: #ffae34;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+}
+span:hover {
+    color: #ffae34;
+    text-decoration: underline;
+}
+.navigator span{
+  cursor: pointer;
+  color: #e39b30;
+}
+@media screen and (max-width:1450px) {
+
+  .register-container-big{
+    transform: scale(0.85);
+  }
+}
+@media screen and (max-width:580px) {
+  .register-container{
+    width: 90%;
+  }
+  .register-form{
+    /* border: 1px solid red; */
+    
+     font-size: 16px;
+  }
+  .topic{
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+ .submit-btn{
+  margin-top: 20px;
+  font-size: 16px;
+
+ }
+}
+@media screen and (max-width:400px) {
+  .all-inputs{
+    margin-left: -3%;
+  }
+}

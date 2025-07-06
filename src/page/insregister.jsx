@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import VantaBackground from './vantabackground';
+import './register.css';
 
 const InsRegister = () => {
   const navigate = useNavigate();
-  const url=import.meta.env.VITE_URL
-  const [insName,setInsName] = useState('')
-  const [userName,setUserName]=useState('')
-  const [number,setNumber]=useState(null)
-  const [password,setPassword]=useState('')
-  const [confirmPassword,setConfirmPassword]=useState('')
+  const url = import.meta.env.VITE_URL;
+
+  const [insName, setInsName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [number, setNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(password != confirmPassword){
-        alert("Password doesnot match")
-        return ;
+    if (password !== confirmPassword) {
+      alert('Password does not match');
+      return;
     }
+
     const response = await fetch(`${url}/insregister`, {
       method: 'POST',
       headers: {
@@ -24,50 +29,98 @@ const InsRegister = () => {
         insName,
         number,
         userName,
-        password
+        password,
       }),
     });
 
     const data = await response.json();
     if (data.success) {
       alert('Registration successful!');
-      navigate('/orglogin'); // Redirect to login page after successful registration
+      navigate('/orglogin');
     } else {
       alert('Registration failed: ' + data.message);
     }
-  }
+  };
 
   return (
     <>
-     
-      <h1>Organization Register</h1>
-      <form action="/" onSubmit={handleSubmit} >
-      <label htmlFor="fistName">Organization Name</label>
-        <input type="text" name="firstName" id="firstName" onChange={(e)=>{setInsName(e.target.value)}} />
-        <br /> <br />
-        <label htmlFor="userName">Contact Number</label>
-        <input type="number" name="contact" id="contact" onChange={(e)=>{setNumber(e.target.value)}} />
-        <br /> <br />
-        <label htmlFor="userName">User Name (E - Mail)</label>
-        <input type="email" name="userName" id="userName" onChange={(e)=>{setUserName(e.target.value)}} />
-        <br /> <br />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" onChange={(e)=>{setPassword(e.target.value)}} />
-        <br /><br />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <br /><br />
-        <input type="submit" value="register" />
-      </form>
+      <div className="body1">
+        <VantaBackground />
+        <div className="body10">
+          <div className="register-container register-container-big glass-card">
+            <h1 className="topic">ORGANIZATION REGISTRATION</h1>
+            <form className="register-form" onSubmit={handleSubmit}>
+              <div className="all-inputs">
 
-     
+                <div className="inputs">
+                  <label htmlFor="insName">Organization Name</label>
+                  <input
+                    type="text"
+                    id="insName"
+                    onChange={(e) => setInsName(e.target.value)}
+                    className="input"
+                    required
+                  />
+                </div>
+
+                <div className="inputs">
+                  <label htmlFor="contact">Contact Number</label>
+                  <input
+                    type="number"
+                    id="contact"
+                    onChange={(e) => setNumber(e.target.value)}
+                    className="input"
+                    required
+                  />
+                </div>
+
+                <div className="inputs">
+                  <label htmlFor="userName">User Name (E-mail)</label>
+                  <input
+                    type="email"
+                    id="userName"
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="input"
+                    required
+                  />
+                </div>
+
+                <div className="inputs">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="input"
+                    required
+                  />
+                </div>
+                  
+
+                <div className="inputs">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="input"
+                    required
+                  />
+                </div>
+
+              </div>
+              <input
+                type="submit"
+                value="Register"
+                className="input submit-btn"
+              />
+            </form>
+            <h3 className="navigator">Already Registerd? <span onClick={()=>{navigate('/orglogin')}}>Login</span> </h3>
+          </div>
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default InsRegister
+export default InsRegister;

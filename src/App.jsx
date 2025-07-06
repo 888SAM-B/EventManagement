@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import {Routes,Route} from 'react-router-dom'
 import './App.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Home from './page/home'
 import Login from './page/login'
 import Register from './page/register'
@@ -12,6 +14,12 @@ import OrganizationLogin from './page/organizationLogin'
 import InsRegister from './page/insregister'
 import InsDashboard from './page/insdashboard'
 function App() {
+    useEffect(() => {
+    AOS.init({
+      duration: 1000, // animation duration in ms
+      once: true,     // whether animation should happen only once
+    });
+  }, []);
   return (
     <>
      <div>

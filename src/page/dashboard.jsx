@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import './insdashboard.css'
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();

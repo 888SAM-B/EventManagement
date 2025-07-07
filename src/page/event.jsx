@@ -1,49 +1,61 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
-const event = () => {
-    const location = useLocation();
-    const data = location.state?.event || {};
-  return (
-    <div>
-      <h2>{data.eventName}</h2>
-      <p>Venue: {data.venue}</p>
-      <p>Timing: {new Date(data.timing).toLocaleString()}</p>
-      <p>Organization: {data.organizerName}</p>
-        <p>Organizer Number: {data.organizerNumber}</p>
-        <p>Organizer Email: {data.organizerMail}</p>
-        <p>Registration Link: <a href={data.registrationLink} target="_blank" rel="noopener noreferrer">{data.registrationLink}</a></p>
-        <p>Awards: {data.awards}</p>
-        <p>Entrance Fees: {data.entranceFees}</p>
-        <p>Description: {data.description}</p>
-        <p>Category: {data.category}</p>
-        <p>Created At: {new Date(data.createdAt).toLocaleString()}</p>
-        <p>Created By: {data.createdBy}</p>
-        <h3>Other Contacts:</h3>
-        <ul>    
-            {data.otherContacts && data.otherContacts.map((contact, index) => (
-                <li key={index}>
-                <p>Name: {contact.name}</p>
-                <p>Number: {contact.number}</p>
-                </li>
-            ))}
-        </ul>
-        {data.pdfFileUrl && (
-            <div>
-                <h3>Event PDF:</h3>
-                <a href={data.pdfFileUrl} download rel="noopener noreferrer">
-                    <button>Download PDF</button>
-                </a>
-            </div>
-        )}
-          <iframe
-              src={`https://docs.google.com/viewer?url=${data.pdfFileUrl}&embedded=true`}
-              width="50%"
-              height="400px"
-              style={{ border: "1px solid #ccc", borderRadius: "8px" }}
-              title="PDF Preview"
-            ></iframe>
-    </div>
-  )
-}
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import './event.css'; // create this CSS file separately
 
-export default event
+const Event = () => {
+  const location = useLocation();
+  const data = location.state?.event || {};
+
+  return (
+    <div className="event-details">
+      <h2>{data.eventName}</h2>
+      <div className="info">
+        <p><strong>Venue:</strong> {data.venue}</p>
+        <p><strong>Timing:</strong> {new Date(data.timing).toLocaleString()}</p>
+        <p><strong>Organization:</strong> {data.organizerName}</p>
+        <p><strong>Organizer Number:</strong> {data.organizerNumber}</p>
+        <p><strong>Organizer Email:</strong> {data.organizerMail}</p>
+        <p><strong>Registration Link:</strong> <a href={data.registrationLink} target="_blank" rel="noopener noreferrer">{data.registrationLink}</a></p>
+        <p><strong>Awards:</strong> {data.awards}</p>
+        <p><strong>Entrance Fees:</strong> {data.entranceFees}</p>
+        <p><strong>Description:</strong> {data.description}</p>
+        <p><strong>Category:</strong> {data.category}</p>
+        <p><strong>Created At:</strong> {new Date(data.createdAt).toLocaleString()}</p>
+        <p><strong>Created By:</strong> {data.createdBy}</p>
+
+        {data.otherContacts?.length > 0 && (
+          <div className="contacts">
+            <h3>Other Contacts:</h3>
+            <ul>
+              {data.otherContacts.map((contact, index) => (
+                <li key={index}>
+                  <p><strong>Name:</strong> {contact.name}</p>
+                  <p><strong>Number:</strong> {contact.number}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {data.pdfFileUrl && (
+          <div className="pdf-section">
+            <h3>Event PDF:</h3>
+            <a href={data.pdfFileUrl} download rel="noopener noreferrer">
+              <button className="download-btn">Download PDF</button>
+            </a>
+
+            <iframe
+              src={`https://docs.google.com/viewer?url=${data.pdfFileUrl}&embedded=true`}
+              width="100%"
+              height="500px"
+              title="PDF Preview"
+              className="pdf-preview"
+            ></iframe>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Event;

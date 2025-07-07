@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './insdashboard.css'
+import './insdashboard.css';
+
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="body-dashboard">
       <h1>Dashboard</h1>
 
       {user ? (
@@ -88,20 +89,17 @@ const Dashboard = () => {
         <p>No user found</p>
       )}
 
-
-      <div style={{ marginBottom: "20px" }}>
-        <label>
-          Sort by:&nbsp;
+      <div className="sort-buttons">
+        <div className="sort-item">
+          <span className="text">Sort by:</span>
           <select value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
             <option value="asc">Oldest First</option>
             <option value="desc">Newest First</option>
           </select>
-        </label>
+        </div>
 
-        &nbsp;&nbsp;
-
-        <label>
-          Filter by Category:&nbsp;
+        <div className="sort-item">
+          <span className="text">Filter by Category:</span>
           <select onChange={handleCategoryFilter} defaultValue="">
             <option value="">All</option>
             {Array.from(new Set(data.data.map(ev => ev.category))).map(cat => (
@@ -110,23 +108,15 @@ const Dashboard = () => {
               </option>
             ))}
           </select>
-        </label>
+        </div>
       </div>
 
-      <h2>Events List:</h2>
+      <h2 className="event-header">Events List:</h2>
 
-      <ul style={{ listStyle: "none", padding: 0 }}>
+      <div className="container">
         {sortedEvents.length > 0 ? (
           sortedEvents.map((event) => (
-            <li
-              key={event._id}
-              style={{
-                border: "1px solid #ccc",
-                marginBottom: "10px",
-                padding: "10px",
-                borderRadius: "8px",
-              }}
-            >
+            <div key={event._id} className="events">
               <h3>{event.eventName}</h3>
               <p><strong>Category:</strong> {event.category.toUpperCase()}</p>
               <p><strong>Organization:</strong> {event.organizerName}</p>
@@ -142,16 +132,15 @@ const Dashboard = () => {
                   hour12: true
                 })}
               </p>
-
               <button onClick={() => navigate(`/event`, { state: { event } })}>
                 View Details
               </button>
-            </li>
+            </div>
           ))
         ) : (
           <p>No events found.</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 };

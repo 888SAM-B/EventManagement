@@ -7,29 +7,45 @@ const VantaBackground = () => {
   const [vantaEffect, setVantaEffect] = useState(null);
 
   useEffect(() => {
-    if (!vantaEffect) {
-      setVantaEffect(
-        NET({
-          el: vantaRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0xff3f3f,
-          backgroundColor: 0x000000,
+    // ✅ Check WebGL Support
+    const isWebGLSupported = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        return !!window.WebGLRenderingContext && (
+          canvas.getContext("webgl") || canvas.getContext("experimental-webgl")
+        );
+      } catch (e) {
+        return false;
+      }
+    };
 
-          // 🎯 These settings reduce overcrowded lines:
-          points: 18,         // Fewer points overall
-          maxDistance: 30,   // Limit line length
-          spacing: 30,       // More space between points
-        })
-      );
+    // ✅ Only apply Vanta effect if WebGL is available
+    if (isWebGLSupported()) {
+      if (!vantaEffect) {
+        setVantaEffect(
+          NET({
+            el: vantaRef.current,
+            THREE: THREE,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.0,
+            minWidth: 200.0,
+            scale: 1.0,
+            scaleMobile: 1.0,
+            color: 0xff3f3f,
+            backgroundColor: 0x000000,
+            points: 8,
+            maxDistance: 30,
+            spacing: 30,
+          })
+        );
+      }
+    } else {
+      console.warn("⚠️ WebGL not supported. Skipping Vanta background.");
     }
 
+    // ✅ Cleanup on unmount
     return () => {
       if (vantaEffect) {
         vantaEffect.destroy();

@@ -45,7 +45,7 @@ const InsRegister = () => {
   return (
     <>
       <div className="body1">
-        <VantaBackground />
+        
         <div className="body10">
           <div className="register-container register-container-big glass-card">
             <h1 className="topic">ORGANIZATION REGISTRATION</h1>

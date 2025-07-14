@@ -64,7 +64,7 @@ const OrganizationLogin = () => {
   return (
     <>
       <div className="body1">
-        <VantaBackground />
+        
         <div className="body10">
           <div className="register-container glass-card">
             <h1 className="topic">ORGANIZATION LOGIN</h1>

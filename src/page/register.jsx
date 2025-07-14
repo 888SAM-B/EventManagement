@@ -38,7 +38,7 @@ const Register = () => {
   return (
     <>
       <div className="body1">
-        <VantaBackground /> {/* Optional animated bg if using Vanta */}
+        
         <div className="body10">
           <div className="register-container glass-card">
             <h1 className='topic' >USER REGISTRATION</h1>

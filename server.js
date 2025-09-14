@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-
+const nodemailer = require("nodemailer");
+require('dotenv').config();
 app.use(express.json());
 app.use(cors());
 
@@ -10,7 +11,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the API');
 });
 
-mongoose.connect("mongodb+srv://dyceventmanagementsystem:dyceventmanagementsystem@cluster0.bsyyzn6.mongodb.net/events",
+mongoose.connect(process.env.DB_URL,
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to Database"))
   .catch(() => { console.log("Error connecting to Database"); })
@@ -107,6 +108,22 @@ const EventSchema = new mongoose.Schema({
     required: true
   }
 });
+
+
+
+
+// Mail transporter setup (example: Gmail)
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_MAIL,
+    pass: process.env.SMTP_PASSWORD,
+  }
+  
+});
+console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD);
+
+
 
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
@@ -246,7 +263,9 @@ app.get('/fetchOrgUser', async (req, res) => {
 });
 
 
+
 app.post('/addEvent', async (req, res) => {
+  console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD)
   const {
     eventName,
     venue,
@@ -270,23 +289,23 @@ app.post('/addEvent', async (req, res) => {
   }
 
   try {
-    const org=await Organization.findOne({userName:createdBy})
+    const org = await Organization.findOne({ userName: createdBy });
     const orgName = org.orgName;
-    console.log(org,orgName)
 
-    const newEvent = new mongoose.model('Event', EventSchema)({
+    const Event = mongoose.model('Event', EventSchema);
+    const newEvent = new Event({
       eventName,
       venue,
       timing: new Date(timing),
-      organizationName:orgName,
+      organizationName: orgName,
       organizerName,
       organizerNumber,
       organizerMail,
       registrationLink,
       awards,
-      entranceFees: entranceFees == 0 ?"Free": entranceFees || "0", // Default to "0" if not provided
+      entranceFees: entranceFees == 0 ? "Free" : entranceFees || "0",
       category,
-      description: description || '', // Default to empty string if not provided
+      description: description || '',
       pdfFileUrl,
       otherContacts: otherContacts || [],
       createdAt: new Date(createdAt),
@@ -294,14 +313,28 @@ app.post('/addEvent', async (req, res) => {
     });
 
     await newEvent.save();
-    
-    return res.status(201).json({ success: true, message: 'Event added successfully' });
+
+    // ✅ Fetch all users
+    const users = await User.find({});
+    const emails = users.map(u => u.userName); // assuming userName = email
+
+    // ✅ Send email to all users
+    const mailOptions = {
+      from: "dyceventmanagementsystem@gmail.com",
+      to: emails, // array of emails
+      subject: `New Event: ${eventName}`,
+      text: `Hello!\n\nA new event "${eventName}" has been added.\n\nVenue: ${venue}\nDate: ${new Date(timing).toLocaleString()}\nOrganized by: ${orgName}\n\nRegister here: ${registrationLink}\n\nRegards,\nDYC Team`
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return res.status(201).json({ success: true, message: 'Event added and notifications sent successfully' });
+
   } catch (error) {
     console.error("Error adding event:", error);
     return res.status(500).json({ success: false, message: 'Error adding event' });
   }
 });
-
 
 app.get('/getData', async (req, res) => {
   try {
@@ -318,6 +351,20 @@ app.get('/getData', async (req, res) => {
   } catch (error) {
     console.error("Error fetching events:", error);
     return res.status(500).json({ success: false, message: 'Error fetching events' });
+  }
+});
+
+app.delete('/deleteEvent/:id', async (req, res) => {
+  const eventId = req.params.id;
+  try {
+    const deletedEvent = await mongoose.model('Event', EventSchema).findByIdAndDelete(eventId);
+    if (!deletedEvent) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+    return res.status(200).json({ success: true, message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return res.status(500).json({ success: false, message: 'Error deleting event' });
   }
 });
 

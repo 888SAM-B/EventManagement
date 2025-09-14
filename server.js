@@ -88,7 +88,7 @@ const EventSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["technical", "cultural", "mathematical", "science", "arts", "mixed"]
+    enum: ["technical", "cultural", "mathematical", "science", "arts", "mixed","sports","seminar","conference","workshop"]
   },
   description: {
     type: String
@@ -121,7 +121,7 @@ const transporter = nodemailer.createTransport({
   }
   
 });
-console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD);
+// console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD);
 
 
 
@@ -193,7 +193,7 @@ app.post('/login',async(req,res)=>{
   if(!user){
     return res.status(400).json({success:false,message:"Invalid Credentials"});
   }
-  console.log("user",user);
+  // console.log("user",user);
   
   return res.status(200).json({success:true,message:"Login Successful",user});
 
@@ -202,7 +202,7 @@ app.post('/login',async(req,res)=>{
 app.get('/fetchOrg',async(req,res)=>{
   try {
     const orgs = await Organization.find({});
-    console.log(orgs)
+    // console.log(orgs)
     res.status(200).json({ success: true, orgNames: orgs.map(org => org.orgName) });
 
   } catch (error) {
@@ -213,7 +213,7 @@ app.get('/fetchOrg',async(req,res)=>{
 
 app.post('/inslogin',async(req,res)=>{
   const {institution,userName,password}=req.body;
-  console.log(institution,userName,password)
+  // console.log(institution,userName,password)
    if(!institution || !userName || !password){
     return res.status(400).json({success:false,message:"All fields are required"});
   }
@@ -221,7 +221,7 @@ app.post('/inslogin',async(req,res)=>{
   if(!user){
     return res.status(400).json({success:false,message:"Invalid Credentials"});
   }
-  console.log("Ins Login",user);
+  // console.log("Ins Login",user);
   
   return res.status(200).json({success:true,message:"Login Successful",user});
 })
@@ -229,7 +229,7 @@ app.post('/inslogin',async(req,res)=>{
 
 app.get('/fetchUser', async (req, res) => {
   const userId = req.query.user;
-  console.log("UserId:", userId);
+  // console.log("UserId:", userId);
   try {
     const user = await User.findOne({ userName: userId });
     if (!user) {
@@ -247,7 +247,7 @@ app.get('/fetchUser', async (req, res) => {
 
 app.get('/fetchOrgUser', async (req, res) => {
   const userId = req.query.user;
-  console.log("UserId:", userId);
+  // console.log("UserId:", userId);
   try {
     const user = await Organization.findOne({ userName: userId });
     if (!user) {
@@ -265,7 +265,7 @@ app.get('/fetchOrgUser', async (req, res) => {
 
 
 app.post('/addEvent', async (req, res) => {
-  console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD)
+  // console.log("ENV",process.env.SMTP_MAIL,process.env.SMTP_PASSWORD)
   const {
     eventName,
     venue,
@@ -343,7 +343,7 @@ app.get('/getData', async (req, res) => {
       return res.status(404).json({ success: false, message: 'No events found' });
     }
     const userName = req.headers['username'];
-    console.log("Request from user:", userName);
+    // console.log("Request from user:", userName);
     if (!userName) {
       return res.status(400).json({ success: false, message: 'Username  is required' });
     }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './insdashboard.css'
 import ShinyText from './ShinyText';
+
 const InsDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -67,6 +68,27 @@ const InsDashboard = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_URL}/deleteEvent/${id}`, {
+        method: "DELETE",
+      });
+      const res = await response.json();
+      if (res.success) {
+        alert("Event deleted successfully!");
+        fetchData(); // refresh events list
+      } else {
+        alert("Failed to delete event");
+      }
+    } catch (error) {
+      console.log("Error deleting event:", error);
+      alert("Error deleting event");
+    }
+  };
+
   const eventsToDisplay = data.filtered || data.data;
 
   const filteredBySearch = eventsToDisplay.filter(ev =>
@@ -108,7 +130,6 @@ const InsDashboard = () => {
             onChange={handleSearch}
           />
         </div>
-
 
         <div className='sort-item'>
           <div className="text"> Sort by: </div>
@@ -158,12 +179,17 @@ const InsDashboard = () => {
               <button onClick={() => navigate(`/event`, { state: { event: ev } })}>
                 View Details
               </button>
+              <button
+                onClick={() => handleDelete(ev._id)}
+                style={{ marginLeft: "10px", background: "#e93c3cff", color: "white" }}
+              >
+                Delete
+              </button>
             </div>
           ))
         )}
       </div>
       <br />
-      
 
       <h1>Other Events</h1>
       <ul style={{ listStyle: "none", padding: 0 }} className='container'>

@@ -1,0 +1,83 @@
+.event-details {
+  background-color: #121212;
+  color: #eaeaea;
+  padding: 30px;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.event-details h2 {
+  color: #e39b30;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.info p {
+  margin: 8px 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.info a {
+  color: #e39b30;
+  text-decoration: underline;
+}
+
+.contacts {
+  margin-top: 20px;
+}
+
+.contacts ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.contacts li {
+  background-color: #1e1e1e;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border-left: 4px solid #e39b30;
+}
+
+.pdf-section {
+  margin-top: 30px;
+}
+
+.download-btn {
+  background-color: #e39b30;
+  color: #000;
+  font-weight: 600;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #ffae34;
+}
+
+.pdf-preview {
+  border: 1px solid #333;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .event-details {
+    padding: 20px;
+  }
+
+  .event-details h2 {
+    font-size: 1.5rem;
+  }
+
+  .pdf-preview {
+    height: 300px;
+  }
+}

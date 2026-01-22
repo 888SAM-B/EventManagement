@@ -94,7 +94,7 @@ const Home = () => {
 </div>
 </div>
     <footer>
-      Designed and Developed by DYC EDUWORKS
+      Designed and Developed by Mohammed Inamul Hasan & Barath Raj
     </footer>
 
     </>

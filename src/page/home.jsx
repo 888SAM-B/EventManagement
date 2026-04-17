@@ -14,7 +14,7 @@ const Home = () => {
     <div className="body">
       <div className="animate-container">
         <BlurText
-          text="EVENT MANAGEMENT SYSTEM"
+          text="DYC EVENT MANAGEMENT SYSTEM"
           delay={150}
           animateBy="words"
           direction="top"
@@ -94,7 +94,7 @@ const Home = () => {
 </div>
 </div>
     <footer>
-      Designed and Developed by Mohammed Inamul Hasan & Barath Raj
+      Designed and Developed by B.Sam
     </footer>
 
     </>
